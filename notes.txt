@@ -1,0 +1,15 @@
+create task
+priority:
+    now
+    soon
+    eventually
+    specified date
+possibly duration needed
+    
+    
+rank tasks based on priority
+choose highest ranked task
+    -badger you till done
+
+database user: soon
+datbase pass: soon
