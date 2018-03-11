@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -13,15 +12,18 @@ import datetime
 from .models import Task
 # Create your views here.
 
-class LandingView(View):
+def getHome(request):
+    if request.user.is_authenticated:
+        return redirect('todo:task')
+    else:
+        return redirect('todo:about')
+
+class AboutView(View):
     def get(self, request):
-        if request.user.is_authenticated:
-            return redirect('home/')
-        else:
-            return render(request, 'todo/landing.html')
+        return render(request, 'todo/about.html')
 
 class PriorityTaskView(LoginRequiredMixin, generic.DetailView):
-    template_name = 'todo/home.html'
+    template_name = 'todo/task.html'
     model = Task
     
     def getMostImportantTask(self):
@@ -48,28 +50,28 @@ class PriorityTaskView(LoginRequiredMixin, generic.DetailView):
         
 class TaskAddView(LoginRequiredMixin, generic.edit.CreateView, SuccessMessageMixin):
     model = Task
-    success_url = '/todo/home/'
+    success_url = reverse_lazy('todo:home')
     success_message = "Task \"%(title)s\" successfully added"
     fields = ['title', 'notes', 'importance', 'duration']
     
     
 class TaskEditView(LoginRequiredMixin, generic.edit.UpdateView):
     model= Task
-    success_url = '/todo/home/'
+    success_url = reverse_lazy('todo:home')
     template_name_suffix = '_edit_form'
     fields = ['title', 'notes', 'importance', 'duration']
 
     
 class TaskDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = Task
-    success_url = '/todo/home/'
+    success_url = reverse_lazy('todo:home')
 
 def completeTask(request, pk):
     task = get_object_or_404(Task, pk=pk)
     try:
         task.done= True
         task.save()
-        return HttpResponseRedirect('/todo/home/')
+        return redirect('todo:home')
     except (Task.DoesNotExist, KeyError):
-        render(request, '/todo/home/', {"message":"Task not found"})
+        render(request, reverse_lazy('todo:home'), {"message":"Task not found"})
         

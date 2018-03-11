@@ -12,4 +12,9 @@ choose highest ranked task
     -badger you till done
 
 database user: soon
-datbase pass: soon
+database pass: soon
+
+
+todo:
+add user specific permissions to tasks
+add notifications(plan is to accept a bunch of handles - facebook, instagram twitter, phone #, email, etc - and blast them accordingly)
