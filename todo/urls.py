@@ -10,4 +10,5 @@ urlpatterns = [
     path('edit/<int:pk>/', views.TaskEditView.as_view(), name='edit'),
     path('delete/<int:pk>/', views.TaskDeleteView.as_view(), name='delete'),
     path('complete/<int:pk>/', views.completeTask, name='complete'),
+    path('signup/', views.CreateUserView.as_view(), name='signup'),
 ]

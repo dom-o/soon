@@ -3,6 +3,8 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 from django.db.models import F, DateTimeField, ExpressionWrapper
 from django.utils import timezone
 from django.views import View
@@ -11,6 +13,22 @@ import datetime
 
 from .models import Task
 # Create your views here.
+
+class CreateUserView(View):
+    def get(self, request):
+        return render(request, 'registration/signup.html', {'form': UserCreationForm()})
+        
+    def post(self, request):
+        form = UserCreationForm(request.POST)
+        if(form.is_valid):
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('todo:home')
+        else:
+            return render(request, 'registration/signup.html', {'form': form})
 
 def getHome(request):
     if request.user.is_authenticated:
