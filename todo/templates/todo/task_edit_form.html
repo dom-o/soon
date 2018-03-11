@@ -1,5 +1,11 @@
+{% extends "logged_in_generic.html" %}
+
+{% block content %}
+
 <form action="" method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save" />
 </form>
 <a href= "{% url 'todo:delete' object.id %}" >Delete this task</a>
+
+{% endblock %}

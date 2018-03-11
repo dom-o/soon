@@ -1,4 +1,10 @@
+{% extends "logged_in_generic.html" %}
+
+{% block content %}
+
 <form action="" method="post"> {% csrf_token %}
     <p>Are you sure?</p>
     <input type="submit" value="Delete" />
 </form>
+
+{% endblock %}

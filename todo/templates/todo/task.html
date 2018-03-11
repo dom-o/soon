@@ -1,3 +1,7 @@
+{% extends "logged_in_generic.html" %}
+
+{% block content %}
+
 {% if messages %}
     {% for message in messages %}
         <p> {{ message }} </p>
@@ -18,3 +22,5 @@
 {% endif %}
 
 <a href="{% url 'todo:add' %}">New task</a>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "base_generic.html" %}
+
+{% block header%}
+    <a href="{% url 'logout' %}">log out</a>
+    <a href="{% url 'todo:home' %}">home</a>
+{% endblock %}
