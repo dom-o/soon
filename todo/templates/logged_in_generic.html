@@ -1,6 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block header%}
+    <span>{{ user.get_username }}</span>
     <a href="{% url 'logout' %}">log out</a>
     <a href="{% url 'todo:home' %}">home</a>
 {% endblock %}
