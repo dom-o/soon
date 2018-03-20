@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 import datetime
 
@@ -7,8 +8,9 @@ import datetime
 class Task(models.Model):
     done = models.BooleanField(default=False)
     title = models.CharField(max_length=100)
-    notes = models.TextField(max_length=500)
+    notes = models.TextField(max_length=500, blank=True)
     dateAdded = models.DateTimeField('date added', auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     NOW=3
     SOON=2
@@ -19,7 +21,7 @@ class Task(models.Model):
         (EVENTUALLY, 'Eventually'),
     )
     importance = models.IntegerField(
-        choices=priorities, default=EVENTUALLY
+        choices=priorities, default=EVENTUALLY, help_text = 'When do you gotta get this done?'
     )
     
     BIG=12
@@ -31,7 +33,7 @@ class Task(models.Model):
         (SMALL, '<1 hour'),
     )
     duration = models.IntegerField(
-        choices=times, default=MEDIUM
+        choices=times, default=MEDIUM, help_text='How long will it take?'
     )
     
     def __str__(self):
