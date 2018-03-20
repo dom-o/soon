@@ -5,6 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.db.models import F, DateTimeField, ExpressionWrapper
 from django.utils import timezone
 from django.views import View
@@ -20,7 +21,7 @@ class CreateUserView(View):
         
     def post(self, request):
         form = UserCreationForm(request.POST)
-        if(form.is_valid):
+        if(form.is_valid()):
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
@@ -45,7 +46,7 @@ class PriorityTaskView(LoginRequiredMixin, generic.DetailView):
     model = Task
     
     def getMostImportantTask(self):
-        unfinishedTasks = Task.objects.filter(done=False)
+        unfinishedTasks = Task.objects.filter(done=False, user=self.request.user)
         if(unfinishedTasks.exists()):
             tasks = unfinishedTasks.annotate(
             priority= ExpressionWrapper(
@@ -72,20 +73,33 @@ class TaskAddView(LoginRequiredMixin, generic.edit.CreateView, SuccessMessageMix
     success_message = "Task \"%(title)s\" successfully added"
     fields = ['title', 'notes', 'importance', 'duration']
     
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
     
 class TaskEditView(LoginRequiredMixin, generic.edit.UpdateView):
     model= Task
     success_url = reverse_lazy('todo:home')
     template_name_suffix = '_edit_form'
-    fields = ['title', 'notes', 'importance', 'duration']
+    fields = ['done', 'title', 'notes', 'importance', 'duration']
+    
+    def get_queryset(self):
+        base = super(TaskEditView, self).get_queryset()
+        return base.filter(user=self.request.user)
 
     
 class TaskDeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = Task
     success_url = reverse_lazy('todo:home')
+    
+    def get_queryset(self):
+        base = super(TaskDeleteView, self).get_queryset()
+        return base.filter(user=self.request.user)
 
+@login_required
 def completeTask(request, pk):
-    task = get_object_or_404(Task, pk=pk)
+    task = get_object_or_404(Task, pk=pk, user=request.user)
+    
     try:
         task.done= True
         task.save()
