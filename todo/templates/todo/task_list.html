@@ -5,7 +5,13 @@
 <h1>Tasks</h1>
 <ul>
 {% for task in object_list %}
-    <li><a href="{% url 'todo:edit' task.id %}">{{ task.title }}</a></li>
+    <li class=
+        {% if task.done == True %}
+            "completed-task"
+        {% else %}
+            "incomplete-task"
+        {% endif %}
+    ><a href="{% url 'todo:edit' task.id %}">{{ task.title }}</a></li>
 {% empty %}
     <li>No tasks</li>
 {% endfor %}
