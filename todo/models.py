@@ -45,4 +45,4 @@ class Task(models.Model):
         return (self.importance * (timezone.now() - self.dateAdded)) + datetime.timedelta(hours=self.duration)
     
     class Meta:
-        ordering = [((F('importance') * (timezone.now() - F('dateAdded'))) + (datetime.timedelta(hours=1) * F('duration'))).desc()]
+        ordering = ['done', ((F('importance') * (timezone.now() - F('dateAdded'))) + (datetime.timedelta(hours=1) * F('duration'))).desc()]

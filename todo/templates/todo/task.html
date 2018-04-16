@@ -18,7 +18,7 @@
     
     <a href="{% url 'todo:edit' task.id %}">Edit this task</a>
 {% else %}
-    <p>No tasks.</p>
+    <p>No unfinished tasks</p>
 {% endif %}
 
 <a href="{% url 'todo:add' %}">New task</a>

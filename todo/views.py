@@ -55,6 +55,13 @@ class PriorityTaskView(LoginRequiredMixin, generic.DetailView):
             mostImportantTask = None
         return mostImportantTask
 
+class TaskListView(LoginRequiredMixin, generic.list.ListView):
+    model = Task
+    paginate_by = 30
+    
+    def get_queryset(self):
+        base = super(TaskListView, self).get_queryset()
+        return base.filter(user=self.request.user)
         
 class TaskAddView(LoginRequiredMixin, generic.edit.CreateView, SuccessMessageMixin):
     model = Task

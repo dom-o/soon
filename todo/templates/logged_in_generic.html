@@ -4,4 +4,5 @@
     <span>{{ user.get_username }}</span>
     <a href="{% url 'logout' %}">log out</a>
     <a href="{% url 'todo:home' %}">home</a>
+    <a href="{% url 'todo:task-list' %}">all tasks</a>
 {% endblock %}
