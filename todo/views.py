@@ -46,25 +46,14 @@ class PriorityTaskView(LoginRequiredMixin, generic.DetailView):
     model = Task
     
     def getMostImportantTask(self):
-        unfinishedTasks = Task.objects.filter(done=False, user=self.request.user)
-        if(unfinishedTasks.exists()):
-            tasks = unfinishedTasks.annotate(
-            priority= ExpressionWrapper(
-            (F('importance') * (timezone.now() - F('dateAdded')))
-            + (datetime.timedelta(hours=1) * F('duration')),
-            output_field = DateTimeField()
-            )).order_by('-priority')
-
-            return tasks[0]
-        else:
-            return None
+        return 
     
     def get_object(self):
         try:
-            t = self.getMostImportantTask()
+            mostImportantTask = Task.objects.filter(done=False, user=self.request.user).first()
         except (Task.DoesNotExist, IndexError) as error:
-            t = None
-        return t  
+            mostImportantTask = None
+        return mostImportantTask
 
         
 class TaskAddView(LoginRequiredMixin, generic.edit.CreateView, SuccessMessageMixin):

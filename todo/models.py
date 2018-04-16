@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import F
 from django.utils import timezone
 from django.contrib.auth.models import User
 
@@ -39,6 +40,9 @@ class Task(models.Model):
     def __str__(self):
         return self.title + " - "+  str(self.getPriority())
     
-    def getPriority(self):
+    @property
+    def priority(self):
         return (self.importance * (timezone.now() - self.dateAdded)) + datetime.timedelta(hours=self.duration)
     
+    class Meta:
+        ordering = [((F('importance') * (timezone.now() - F('dateAdded'))) + (datetime.timedelta(hours=1) * F('duration'))).desc()]
