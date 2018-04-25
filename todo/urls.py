@@ -3,7 +3,7 @@ from . import views
 
 app_name = 'todo'
 urlpatterns = [
-    path('home/', views.getHome, name='home'),
+    path('', views.getHome, name='home'),
     path('about/', views.AboutView.as_view(), name='about'),
     path('task/', views.PriorityTaskView.as_view(), name='task'),
     path('add/', views.TaskAddView.as_view(), name='add'),
