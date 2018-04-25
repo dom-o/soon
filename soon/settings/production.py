@@ -15,4 +15,4 @@ CSRF_COOKIE_SECURE = True
 
 X_FRAME_OPTIONS = 'DENY'
 
-DATABASES['default'] = dj_database_url.config(conn_max_age=500, ssl_require=True)
+DATABASES['default'] = dj_database_url.config(conn_max_age=500)#, ssl_require=True)
