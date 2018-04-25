@@ -10,8 +10,13 @@
 </head>
 
 <body>
-    <div>
-        {% block header %}{% endblock %}
+    <div class="container">
+        <header class="masthead clearfix">
+            <h1 class="site-name"><a href="{% url 'todo:home' %}">soon</a></h1>
+            <nav>
+                {% block header %}{% endblock %}
+            </nav>
+        </header>
     </div>
     <div>
         {% block content %}{% endblock %}

@@ -12,15 +12,32 @@
 code {
     background: white;
 }
+
 a {
     border-bottom: 1px solid #f2f2f2; 
     color: #f2f2f2; 
     text-decoration: none;
 }
+
 a:hover {
     border-bottom: 0;
 }
 
 .completed-task {
     text-decoration: line-through;
+}
+
+nav {
+    float:right;
+}
+
+.site-name {
+    float:left;
+}
+
+.clearfix:after {
+    clear:both;
+    content: " ";
+    height: 0;
+    display: block;
 }
