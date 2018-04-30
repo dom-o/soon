@@ -1,0 +1,45 @@
+{% extends "logged_in_generic.html" %}
+
+{% block extrahead %}
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>    
+{% endblock %}
+
+
+{% block content %}
+    <div class="row" >
+        <div id="priority" style="width:80%px;height:40%;"></div>
+    </div>
+    <script type="text/javascript">
+            url = "http://127.0.0.1:8000/api/task/priority";
+            Plotly.d3.json(url, function(error, data) { 
+                if(error) { return console.warn(error); }
+                processData(data);
+            });
+
+            function processData(jsonData) {
+                var data = [];
+                console.log(jsonData);
+                for(thing in jsonData) {
+                    data.push({
+                        type: "scatter",
+                        mode: "lines",
+                        name: thing,
+                        x: jsonData[thing].dates.map(fromSeconds),
+                        y: jsonData[thing].priorities,
+                    });
+                }
+                
+                var layout = {
+                    title: 'Priority over time', 
+                };
+                
+                Plotly.newPlot('priority', data, layout);
+            }
+            
+            function fromSeconds(seconds) {
+                var epoch = new Date(1970, 0, 1);
+                epoch.setSeconds(seconds);
+                return epoch;
+            }
+    </script>
+{% endblock %}

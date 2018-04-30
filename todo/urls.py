@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import TemplateView
 from . import views
 
 app_name = 'todo'
@@ -12,4 +13,6 @@ urlpatterns = [
     path('complete/<int:pk>/', views.completeTask, name='complete'),
     path('signup/', views.CreateUserView.as_view(), name='signup'),
     path('task-list/', views.TaskListView.as_view(), name='task-list'),
+    path('api/task/priority', views.PriorityGraphView.as_view(), name='api-priority-data'),
+    path('analytics/priority', TemplateView.as_view(template_name='analytics/task_priority.html')),
 ]
