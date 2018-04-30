@@ -9,10 +9,13 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import F, DateTimeField, ExpressionWrapper
 from django.utils import timezone
 from django.views import View
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 import datetime
 
 from .models import Task
+from .priority import getPriority
 # Create your views here.
 
 class CreateUserView(View):
@@ -44,9 +47,6 @@ class AboutView(View):
 class PriorityTaskView(LoginRequiredMixin, generic.DetailView):
     template_name = 'todo/task.html'
     model = Task
-    
-    def getMostImportantTask(self):
-        return 
     
     def get_object(self):
         try:
@@ -103,3 +103,25 @@ def completeTask(request, pk):
     except (Task.DoesNotExist, KeyError):
         render(request, reverse_lazy('todo:home'), {"message":"Task not found"})
         
+class PriorityGraphView(APIView):
+    authentication_classes = []
+    permission_classes = []
+    
+    def get(self, request, format=None):
+        dateAdded = timezone.now()
+        data = dict()
+        
+        for i in range(1,4):
+            for j in (1,5,12):
+                ij = str(i)+'(imp), '+str(j)+'(dur)'
+                data[ij] = {
+                    'dates': [],
+                    'priorities': [],
+                }
+                
+                for currDate in range(int(dateAdded.timestamp()), int((dateAdded+datetime.timedelta(weeks=2)).timestamp()), 1800):
+                    data[ij]['dates'].append(currDate)
+                    data[ij]['priorities'].append(getPriority(i,j,dateAdded, datetime.datetime.fromtimestamp(currDate, timezone.utc)))
+
+        
+        return Response(data)
