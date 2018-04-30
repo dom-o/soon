@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 import datetime
+from .priority import getPriority
+
 
 # Create your models here.
 class Task(models.Model):
@@ -25,8 +27,8 @@ class Task(models.Model):
         choices=priorities, default=EVENTUALLY, help_text = 'When do you gotta get this done?'
     )
     
-    BIG=12
-    MEDIUM=5
+    BIG=3
+    MEDIUM=2
     SMALL=1
     times = (
         (BIG, 'Many hours'),
@@ -42,7 +44,7 @@ class Task(models.Model):
     
     @property
     def priority(self):
-        return (self.importance * (timezone.now() - self.dateAdded)) + datetime.timedelta(hours=self.duration)
+        return getPriority(self.importance, self.duration, self.dateAdded, timezone.now())
     
     class Meta:
-        ordering = ['done', ((F('importance') * (timezone.now() - F('dateAdded'))) + (datetime.timedelta(hours=1) * F('duration'))).desc()]
+        ordering = ['done', getPriority(F('importance'), F('duration'), F('dateAdded'), timezone.now()).desc()]
