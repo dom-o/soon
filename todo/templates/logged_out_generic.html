@@ -1,6 +1,6 @@
 {% extends "base_generic.html" %}
 
-{% block header%}
-    <a href="{% url 'login' %}">log in</a>
-    <a href="{% url 'todo:signup' %}">sign up</a>
+{% block nav%}
+    <a class="nav-item nav-link" href="{% url 'login' %}">log in</a>
+    <a class="nav-item nav-link" href="{% url 'todo:signup' %}">sign up</a>
 {% endblock %}

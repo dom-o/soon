@@ -1,9 +1,7 @@
 {% extends "base_generic.html" %}
 
-{% block header%}
-<nav>
-    <span>{{ user.get_username }}</span>
-    <a href="{% url 'todo:task-list' %}">all tasks</a>
-    <a href="{% url 'logout' %}">log out</a>
-</nav>  
+{% block nav%}
+    <span class="navbar-text">{{ user.get_username }}</span>
+    <a class="nav-item nav-link" href="{% url 'todo:task-list' %}">all tasks</a>
+    <a class="nav-item nav-link" href="{% url 'logout' %}">log out</a>
 {% endblock %}
