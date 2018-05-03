@@ -1,12 +1,23 @@
 {% extends "logged_in_generic.html" %}
+{% load widget_tweaks %}
 
 {% block content %}
 
 <h1>New task</h1>
 
 <form action="" method="post"> {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Add" />
+    {% for field in form %}
+        <div class="form-group">
+            {% if field.help_text %}
+                <label for="{{field.id_for_label}}">{{ field.help_text }}</label>
+            {% else %}  
+                {{ field.label_tag }}
+            {% endif %}
+            
+            {% render_field field class="form-control" %}
+        </div>
+    {% endfor %}
+    <input type="submit" class="btn btn-primary" value="Add">
 </form>
 
 {% endblock %}
