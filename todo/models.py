@@ -10,8 +10,8 @@ from .priority import getPriority
 # Create your models here.
 class Task(models.Model):
     done = models.BooleanField(default=False)
-    title = models.CharField(max_length=100)
-    notes = models.TextField(max_length=500, blank=True)
+    title = models.CharField(max_length=100, help_text='What do you have to get done?')
+    notes = models.TextField(max_length=500, blank=True, help_text='Add anything related to this task here')
     dateAdded = models.DateTimeField('date added', auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
@@ -24,7 +24,7 @@ class Task(models.Model):
         (EVENTUALLY, 'Eventually'),
     )
     importance = models.IntegerField(
-        choices=priorities, default=EVENTUALLY, help_text = 'When do you gotta get this done?'
+        choices=priorities, default=EVENTUALLY, help_text = 'When do you have to do it?'
     )
     
     BIG=3
@@ -33,7 +33,7 @@ class Task(models.Model):
     times = (
         (BIG, 'Many hours'),
         (MEDIUM, 'Up to several hours'),
-        (SMALL, '<1 hour'),
+        (SMALL, 'Less than 1 hour'),
     )
     duration = models.IntegerField(
         choices=times, default=MEDIUM, help_text='How long will it take?'

@@ -8,19 +8,22 @@
     {% endfor %}
 {%endif%}
 
-{% if task %}
-    <h2>{{ task.title }}</h2>
-    <p>{{ task.notes }}</p>
-    
-    <form action="{% url 'todo:complete' task.id %}" method="post"> {% csrf_token %}
-        <input type="submit" value="Mark as done">
-    </form>
-    
-    <a href="{% url 'todo:edit' task.id %}">Edit this task</a>
-{% else %}
-    <p>No unfinished tasks</p>
-{% endif %}
+<div class="jumbotron">
+    {% if task %}
+        <h1 class="display-4">{{ task.title }}</h2>
+        <p class="lead">{{ task.notes }}</p>
+        
+        <form action="{% url 'todo:complete' task.id %}" method="post"> {% csrf_token %}
+            <input type="submit" value="Finished it">
+        </form>
+        
+        <a href="{% url 'todo:edit' task.id %}">Edit it</a>
+    {% else %}
+        <p class="lead">No unfinished tasks</p>
+        <a href="{% url 'todo:add' %}">New task</a>
+    {% endif %}
+</div>
 
-<a href="{% url 'todo:add' %}">New task</a>
+
 
 {% endblock %}
