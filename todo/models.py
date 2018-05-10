@@ -40,7 +40,7 @@ class Task(models.Model):
     )
     
     def __str__(self):
-        return self.title + " - "+  str(self.getPriority())
+        return self.title + " - "+  str(self.priority)
     
     @property
     def priority(self):

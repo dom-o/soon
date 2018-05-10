@@ -1,0 +1,9 @@
+{% extends 'base_bs_form.html' %}
+
+{% block morefield %}
+
+{% if field.name == 'duration' %}
+    <small class="form-text text-muted">If it takes less than five minutes, don't make a task - do it now</small>
+{% endif %}
+
+{% endblock %}

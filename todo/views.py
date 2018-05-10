@@ -77,7 +77,7 @@ class TaskEditView(LoginRequiredMixin, generic.edit.UpdateView):
     model= Task
     success_url = reverse_lazy('todo:home')
     template_name_suffix = '_edit_form'
-    fields = ['done', 'title', 'notes', 'importance', 'duration']
+    fields = ['title', 'notes', 'importance', 'duration']
     
     def get_queryset(self):
         base = super(TaskEditView, self).get_queryset()
