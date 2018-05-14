@@ -9,29 +9,37 @@
 {% endif %}
 
 {% for field in form %}
-    <div class="form-group">
-        {% if field.help_text %}
-            <label for="{{field.id_for_label}}">{{ field.help_text }}</label>
-        {% else %}  
-            {{ field.label_tag }}
-        {% endif %}
-        
-        {% if form.is_bound %}
-            {% if field.errors %}
-                {% render_field field class="form-control is-invalid" %}
-                {% for error in field.errors %}
-                    <div class="invalid-feedback">
-                        {{ error }}
-                    </div>
-                {% endfor %}
+    {% block field_render %}
+        <div class="form-group">
+            
+            {% block field_label %}
+                {{ field.label_tag }}
+            {% endblock %}
+            
+            {% if form.is_bound %}
+                {% block bound_render %}
+                    {% if field.errors %}
+                        {% render_field field class="form-control is-invalid" %}
+                        {% for error in field.errors %}
+                            <div class="invalid-feedback">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field field class="form-control is-valid" %}
+                    {% endif %}
+                {% endblock %}
             {% else %}
-                {% render_field field class="form-control is-valid" %}
+                {% block unbound_render %}
+                    {% render_field field class="form-control" %}
+                {% endblock %}
             {% endif %}
-        {% else %}
-            {% render_field field class="form-control" %}
-        {% endif %}
-        
-        {% block morefield %}
-        {% endblock %}
-    </div>
+            
+            {% block morefield %}
+                {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endblock %}
 {% endfor %}

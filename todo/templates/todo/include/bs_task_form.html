@@ -1,5 +1,16 @@
 {% extends 'base_bs_form.html' %}
 
+{% block field_label %}
+
+    {% if field.help_text %}
+        <label for="{{field.id_for_label}}">{{ field.help_text }}</label>
+    {% else %}  
+        {{ field.label_tag }}
+    {% endif %}
+    
+{% endblock %}
+
+
 {% block morefield %}
 
 {% if field.name == 'duration' %}

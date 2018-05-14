@@ -1,0 +1,7 @@
+{% extends 'base_bs_form.html' %}
+
+{% block morefield %}
+    {% if field.help_text %}
+        <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+    {% endif %}
+{% endblock %}

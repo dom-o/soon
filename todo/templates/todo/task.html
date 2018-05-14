@@ -14,7 +14,7 @@
         <p class="lead">{{ task.notes }}</p>
         
         <form action="{% url 'todo:complete' task.id %}" method="post"> {% csrf_token %}
-            <input type="submit" value="Finished it">
+            <input type="submit" class="btn btn-primary" value="Finished it">
         </form>
         
         <a href="{% url 'todo:edit' task.id %}">Edit it</a>

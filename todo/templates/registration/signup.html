@@ -3,8 +3,8 @@
 {% block content %}
 
 <form action="" method="post"> {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Sign up" />
+    {% include 'todo/include/bs_user_form.html' with form=form %}
+    <input type="submit" class="btn btn-primary" value="Sign up" />
 </form>
 
 <a href="{% url 'login' %}">Already signed up?</a>
