@@ -2,12 +2,6 @@
 
 {% block content %}
 
-{% if messages %}
-    {% for message in messages %}
-        <p> {{ message }} </p>
-    {% endfor %}
-{%endif%}
-
 <div class="jumbotron">
     {% if task %}
         <h1 class="display-4">{{ task.title }}</h2>

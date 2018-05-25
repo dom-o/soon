@@ -2,8 +2,9 @@
 
 {% block content %}
 
-<p>Successfully logged out.<p/>
+<div class="alert alert-success">
+    Successfully logged out
+</div>
 
-<a href="{% url 'login' %}">Log in again if you like<a/>
-
+<a href="{% url 'login' %}" >Log in again if you like</a>
 {% endblock %}
