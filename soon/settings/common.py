@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'todo.apps.TodoConfig',
     'rest_framework',
     'widget_tweaks',
+    'markdown_deux',
 ]
 
 MIDDLEWARE = [

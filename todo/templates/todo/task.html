@@ -1,11 +1,12 @@
 {% extends "logged_in_generic.html" %}
+{% load markdown_deux_tags %}
 
 {% block content %}
 
 <div class="jumbotron">
     {% if task %}
         <h1 class="display-4">{{ task.title }}</h2>
-        <p class="lead">{{ task.notes }}</p>
+        <p class="lead">{{ task.notes|markdown }}</p>
         
         <form action="{% url 'todo:complete' task.id %}" method="post"> {% csrf_token %}
             <input type="submit" class="btn btn-primary" value="Finished it">

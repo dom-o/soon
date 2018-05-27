@@ -1,4 +1,5 @@
 {% extends 'base_bs_form.html' %}
+{% load markdown_deux_tags %}
 
 {% block field_label %}
 
@@ -15,6 +16,12 @@
 
 {% if field.name == 'duration' %}
     <small class="form-text text-muted">If it takes less than five minutes, don't make a task - do it now</small>
+{% elif field.name == 'notes' %}
+    <small class="form-text text-muted">
+        <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown syntax</a> allowed, but no raw HTML. Examples: **bold**, *italic*, indent 4 spaces for a code block.
+    </small>
 {% endif %}
+
+
 
 {% endblock %}
