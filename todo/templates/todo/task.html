@@ -6,6 +6,7 @@
 <div class="jumbotron">
     {% if task %}
         <h1 class="display-4">{{ task.title }}</h2>
+        <hr />
         <p class="lead">{{ task.notes|markdown }}</p>
         
         <form action="{% url 'todo:complete' task.id %}" method="post"> {% csrf_token %}
@@ -14,9 +15,8 @@
         
         <a href="{% url 'todo:edit' task.id %}">Edit it</a>
     {% else %}
-        <p class="lead">No unfinished tasks</p>
+        <p class="lead">No unfinished tasks. <a href="{% url 'todo:add' %}">Add some.</a></p>
     {% endif %}
-    <a href="{% url 'todo:add' %}">New task</a>
 </div>
 
 

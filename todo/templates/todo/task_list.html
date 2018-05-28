@@ -3,15 +3,29 @@
 {% block content %}
 
 <h1>Tasks</h1>
-<div class="list-group">
-{% for task in object_list %}
-    <a 
-        class= "list-group-item list-group-item-action 
-        {% if task.done == True %} disabled {% endif %}" 
-        href="{% url 'todo:edit' task.id %}">{{ task.title }}
-    </a>
-{% empty %}
-    <a class="list-group-item list-group-item-action" href="{% url 'todo:add' %}">Add some tasks</a>
-{% endfor %}
-</div>
+    <div class="btn-group" role="group" aria-label="Task view toggles">
+        <button class="btn btn-light" type="button" data-toggle="collapse" data-target=".undoneTask" aria-expanded="false" aria-controls="collapseUndoneTasks">Undone tasks</button>
+        <button class="btn btn-dark" type="button" data-toggle="collapse" data-target=".doneTask" aria-expanded="false" aria-controls="collapseDoneTasks">Completed tasks</button>
+    </div>
+    <div class="list-group">
+        {% for task in object_list %}
+            {%if task.done %}
+                <a 
+                    class= "list-group-item list-group-item-action list-group-item-dark doneTask show" 
+                    href="{% url 'todo:edit' task.id %}">{{ task.title }}
+                </a>
+            {% else %}
+                <a 
+                    class= "list-group-item list-group-item-action list-group-item-light undoneTask show" 
+                    href="{% url 'todo:edit' task.id %}">{{ task.title }}
+                </a>
+            {% endif %}
+        {% empty %}
+            <p class="lead">
+                You don't have any tasks yet.
+                <a href="{% url 'todo:add' %}">Add some.</a>
+            </p>
+        {% endfor %}
+    </div>      
+
 {% endblock %}

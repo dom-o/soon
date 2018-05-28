@@ -1,7 +1,12 @@
 {% extends "base_generic.html" %}
 
 {% block nav%}
-    <span class="navbar-text">{{ user.get_username }}</span>
+    <a class="nav-item nav-link" href="{% url 'todo:add' %}">new task</a>
     <a class="nav-item nav-link" href="{% url 'todo:task-list' %}">all tasks</a>
-    <a class="nav-item nav-link" href="{% url 'logout' %}">log out</a>
+    <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.get_username }}</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'logout' %}">log out</a>
+        </div>
+    </div>
 {% endblock %}
