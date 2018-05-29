@@ -3,13 +3,13 @@
 
 {% block content %}
 
-<h1>Edit task</h2>
-
+<h1>Edit task</h1>
+<small><a href= "{% url 'todo:delete' object.id %}" >Delete this task</a></small>
 <form action="" method="post"> {% csrf_token %}
     {% include 'todo/include/bs_task_form.html' with form=form %}
     <input type="submit" class="btn btn-primary" value="Edit">
 </form>
 
-<a href= "{% url 'todo:delete' object.id %}" >Delete this task</a>
+
 
 {% endblock %}

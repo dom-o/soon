@@ -5,7 +5,8 @@
 
 <div class="jumbotron">
     {% if task %}
-        <h1 class="display-4">{{ task.title }}</h2>
+        <h1 class="display-4">{{ task.title }}</h1>
+        <small><a href="{% url 'todo:edit' task.id %}">edit this task</a></small>
         <hr />
         <p class="lead">{{ task.notes|markdown }}</p>
         
@@ -13,7 +14,7 @@
             <input type="submit" class="btn btn-primary" value="Finished it">
         </form>
         
-        <a href="{% url 'todo:edit' task.id %}">Edit it</a>
+        
     {% else %}
         <p class="lead">No unfinished tasks. <a href="{% url 'todo:add' %}">Add some.</a></p>
     {% endif %}
