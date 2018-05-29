@@ -4,7 +4,10 @@ import dj_database_url
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG'] or False
+if ('DEBUG' in os.environ):
+    DEBUG = os.environ['DEBUG']
+else:
+    DEBUG = False
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
