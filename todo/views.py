@@ -63,6 +63,12 @@ class TaskListView(LoginRequiredMixin, generic.list.ListView):
         base = super(TaskListView, self).get_queryset()
         return base.filter(user=self.request.user)
         
+    def get_context_data(self, **kwargs):
+        base = super().get_context_data(**kwargs)
+        base['doneTasks'] = Task.objects.filter(done=True, user=self.request.user)
+        base['undoneTasks'] = Task.objects.filter(done=False, user=self.request.user)
+        return base
+        
 class TaskAddView(LoginRequiredMixin, generic.edit.CreateView, SuccessMessageMixin):
     model = Task
     success_url = reverse_lazy('todo:home')

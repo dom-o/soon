@@ -3,29 +3,35 @@
 {% block content %}
 
 <h1>Tasks</h1>
-    <div class="btn-group" role="group" aria-label="Task view toggles">
-        <button class="btn btn-light" type="button" data-toggle="collapse" data-target=".undoneTask" aria-expanded="false" aria-controls="collapseUndoneTasks">Undone tasks</button>
-        <button class="btn btn-dark" type="button" data-toggle="collapse" data-target=".doneTask" aria-expanded="false" aria-controls="collapseDoneTasks">Completed tasks</button>
-    </div>
-    <div class="list-group">
-        {% for task in object_list %}
-            {%if task.done %}
+    {% if object_list %}
+        <div class="list-group">
+            {%for task in undoneTasks %}
                 <a 
-                    class= "list-group-item list-group-item-action list-group-item-dark doneTask show" 
+                    class= "list-group-item list-group-item-action" 
                     href="{% url 'todo:edit' task.id %}">{{ task.title }}
                 </a>
-            {% else %}
+            {% empty %}
+                <p class="list-group-item">No tasks</p>
+            {% endfor %}
+        </div>
+        
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#doneTaskList" aria-expanded="false" aria-controls="collapseDoneTasks">Show completed tasks</button>
+    
+        <div class="list-group collapse" id="doneTaskList">
+            {% for task in doneTasks %}
                 <a 
-                    class= "list-group-item list-group-item-action list-group-item-light undoneTask show" 
+                    class= "list-group-item list-group-item-action text-muted" 
                     href="{% url 'todo:edit' task.id %}">{{ task.title }}
                 </a>
-            {% endif %}
-        {% empty %}
-            <p class="lead">
-                You don't have any tasks yet.
-                <a href="{% url 'todo:add' %}">Add some.</a>
-            </p>
-        {% endfor %}
-    </div>      
+            {% empty %}
+                <p class="list-group-item">No tasks</p>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="lead">
+            You don't have any tasks yet.
+            <a href="{% url 'todo:add' %}">Add some.</a>
+        </p>
+    {% endif %}
 
 {% endblock %}
