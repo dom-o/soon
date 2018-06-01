@@ -6,7 +6,11 @@
 <div class="jumbotron">
     {% if task %}
         <h1 class="display-4">{{ task.title }}</h1>
-        <small><a href="{% url 'todo:edit' task.id %}">edit this task</a></small>
+        <small>
+            <a href="{% url 'todo:edit' task.id %}">Edit this task</a>
+            |             
+            <a href= "{% url 'todo:delete' object.id %}" >Delete this task</a>
+        </small>
         <hr />
         <p class="lead">{{ task.notes|markdown }}</p>
         

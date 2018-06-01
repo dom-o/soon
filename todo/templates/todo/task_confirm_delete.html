@@ -3,8 +3,12 @@
 {% block content %}
 
 <form action="" method="post"> {% csrf_token %}
-    <p>Are you sure?</p>
+    <h1>Confirm delete</h1>
+        <h3>{{task.title}}</h3>
+        <p>{{task.notes}}</p>
     <input type="submit" class="btn btn-primary" value="Delete" />
+    {% url 'todo:home' as cancel_url %} 
+    {% include 'todo/include/cancel_button.html' with cancel_text='Cancel' cancel_url=cancel_url %}
 </form>
 
 {% endblock %}
